@@ -1,0 +1,219 @@
+PRACTICAL 6 — PHP WITH MONGODB
+
+STEP 1: COPY PHP MONGODB EXTENSION
+
+Copy:
+php_mongo.dll
+
+Paste it into:
+C:\xampp\php\ext\
+
+
+STEP 2: EDIT PHP CONFIGURATION
+
+Open:
+C:\xampp\php\php.ini
+
+Find the extensions section.
+
+Add:
+extension=php_mongo.dll
+
+Save the file.
+
+
+STEP 3: LAUNCH MONGO SHELL
+
+Open MongoDB Shell.
+
+
+STEP 4: CREATE PHP FILES
+
+Create:
+
+insert.php
+update.php
+retrieve.php
+
+Save all files in:
+
+C:\xampp\htdocs\
+
+While saving, select:
+
+Save as type: All Files
+
+
+STEP 5: START XAMPP
+
+Open XAMPP.
+
+Start:
+Apache
+
+Click:
+Admin
+
+Browser opens:
+http://localhost/dashboard
+
+Replace dashboard with the PHP filename.
+
+Example:
+http://localhost/insert.php
+
+
+1. INSERT — insert.php
+
+<?php
+
+$m = new MongoClient();
+
+echo "Connection to database successfully";
+
+$db = $m -> MYDB269758;
+
+echo "\nCollection selected successfully";
+
+$col = $db -> MyCol;
+
+echo "\nCollection selected successfully";
+
+$doc = array(
+    "name" => "Ashwini",
+    "age" => 20,
+    "dept" => "TYIT",
+    "rollno" => 269758
+);
+
+$col -> insert($doc);
+
+echo "\nDocument inserted successfully";
+
+?>
+
+
+RUN:
+
+http://localhost/insert.php
+
+
+2. UPDATE — update.php
+
+<?php
+
+$m = new MongoClient();
+
+echo "Connection to database successfully";
+
+$db = $m -> MYDB269758;
+
+echo "\nCollection selected successfully";
+
+$col = $db -> MyCol;
+
+echo "\nCollection selected successfully";
+
+$col -> update(array("name" => "Ashwini"),array('$set'=>array("age" => 19)));
+
+echo "\nDocument updated successfully";
+
+?>
+
+
+RUN:
+
+http://localhost/update.php
+
+
+3. RETRIEVE — retrieve.php
+
+<?php
+
+$m = new MongoClient();
+
+echo "\nConnection database successfully";
+
+$db = $m -> MYDB269758;
+
+echo "\nDatabase selected successfully";
+
+$col = $db -> MyCol;
+
+echo "\nCollection selected successfully";
+
+$cursor = $col -> find();
+
+foreach($cursor as $doc)
+{
+    echo "<br/>";
+    echo $doc["name"]."<br/>";
+    echo $doc["age"]."<br/>";
+    echo $doc["dept"]."<br/>";
+    echo $doc["rollno"]."<br/>";
+}
+
+?>
+
+
+RUN:
+http://localhost/retrieve.php
+
+4.DELETE - delete.php
+
+<?php
+
+$m = new MongoClient();
+
+echo "Connection to database successfully";
+
+$db = $m->MYDB239720;
+
+echo "\nDatabase selected successfully";
+
+$col = $db->MyCol;
+
+echo "\nCollection selected successfully";
+
+$col->remove(array("name" => "Romal"));
+
+echo "\nDocument deleted successfully";
+
+?>
+
+
+RUN:
+http://localhost/delete.php
+
+STEP 6: VERIFY USING MONGO SHELL
+
+show dbs
+
+use MYDB269758
+
+show collections
+
+db.MyCol.find()
+
+
+EXPECTED DATA AFTER INSERT:
+
+name: Ashwini
+age: 20
+dept: TYIT
+rollno: 269758
+
+
+AFTER UPDATE:
+
+age: 19
+
+
+GITHUB STRUCTURE
+
+Practical-6/
+│
+├── insert.php
+├── update.php
+├── retrieve.php
+└── README.md
